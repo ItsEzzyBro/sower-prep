@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f3ff;
+    color: #333333;
+}
+
+.welcome-container {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 20px;
+}
+
+.welcome-container h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.welcome-container h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.welcome-container p {
+    font-size: 18px;
+    max-width: 500px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 12px 24px;
+
+    font-size: 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
