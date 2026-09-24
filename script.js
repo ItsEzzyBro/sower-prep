@@ -1,5 +1,7 @@
 const getStartedButton = document.getElementById("getStartedButton");
 
-getStartedButton.addEventListener("click", function () {
-    alert("Welcome to the Children's Ministry Teacher Assistant!");
-});
+if (getStartedButton) {
+    getStartedButton.addEventListener("click", function () {
+        window.location.href = "login.html";
+    });
+}
