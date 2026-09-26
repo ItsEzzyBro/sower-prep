@@ -39,3 +39,34 @@ if (logoutButton) {
 
     });
 }
+
+const backToDashboardButton =
+    document.getElementById("backToDashboardButton");
+
+if (backToDashboardButton) {
+    backToDashboardButton.addEventListener("click", function () {
+        window.location.href = "dashboard.html";
+    });
+}
+
+
+const cancelLessonButton =
+    document.getElementById("cancelLessonButton");
+
+if (cancelLessonButton) {
+    cancelLessonButton.addEventListener("click", function () {
+        window.location.href = "dashboard.html";
+    });
+}
+
+const lessonForm = document.getElementById("lessonForm");
+
+if (lessonForm) {
+    lessonForm.addEventListener("submit", function (event) {
+
+        event.preventDefault();
+
+        alert("Lesson form submitted! We will connect this to the database next.");
+
+    });
+}

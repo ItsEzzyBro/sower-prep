@@ -176,3 +176,70 @@ button {
 
     color: #666666;
 }
+
+.form-container {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    padding: 40px 20px;
+}
+
+.form-container h2 {
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+.form-container > p {
+    margin-bottom: 30px;
+
+    color: #666666;
+}
+
+
+#lessonForm {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+#lessonForm input,
+#lessonForm select,
+#lessonForm textarea {
+    width: 100%;
+
+    padding: 12px;
+
+    font-size: 16px;
+
+    font-family: inherit;
+
+    border: 1px solid #cccccc;
+
+    border-radius: 6px;
+
+    margin-bottom: 15px;
+}
+
+
+#lessonForm textarea {
+    resize: vertical;
+}
+
+
+.form-buttons {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+
+.form-buttons button {
+    flex: 1;
+}
