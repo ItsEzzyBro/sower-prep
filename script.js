@@ -18,3 +18,24 @@ if (registerForm) {
 
     });
 }
+
+const createLessonButton = document.getElementById("createLessonButton");
+
+if (createLessonButton) {
+    createLessonButton.addEventListener("click", function () {
+        window.location.href = "create-lesson.html";
+    });
+}
+
+
+const logoutButton = document.getElementById("logoutButton");
+
+if (logoutButton) {
+    logoutButton.addEventListener("click", function () {
+
+        alert("You have been logged out.");
+
+        window.location.href = "login.html";
+
+    });
+}
