@@ -680,3 +680,53 @@ button:hover {
 .lesson-info strong {
     font-weight: 800;
 }
+
+/* View Lesson */
+
+#viewLesson {
+    width: 100%;
+}
+
+#viewLesson > h2 {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+#viewLesson .form-section p {
+    margin-bottom: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+#viewLesson .form-section p:last-child {
+    margin-bottom: 0;
+}
+
+#viewLesson .form-section strong {
+    font-weight: 800;
+}
+
+/* View Lesson Actions */
+
+.lesson-view-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+}
+
+#editLessonButton {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--kids-pink);
+    color: white;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#editLessonButton:hover {
+    opacity: 0.9;
+}

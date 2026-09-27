@@ -764,6 +764,33 @@ if (viewLessonPage) {
         `;
     }
 
+    const editLessonButton =
+    document.getElementById("editLessonButton");
+
+    if (editLessonButton) {
+
+        editLessonButton.addEventListener(
+            "click",
+            function () {
+
+                const params =
+                    new URLSearchParams(window.location.search);
+
+                const lessonId =
+                    params.get("id");
+
+                if (lessonId) {
+
+                    window.location.href =
+                        `edit-lesson.html?id=${lessonId}`;
+
+                }
+
+            }
+        );
+
+    }
+
     loadViewLesson();
 
 }
