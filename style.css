@@ -657,3 +657,26 @@ button:hover {
 .form-section:first-of-type {
     margin-top: 20px;
 }
+
+/* ========================================
+   LESSON INFORMATION
+======================================== */
+
+.lesson-info {
+    margin-top: 15px;
+    padding: 18px;
+    background-color: var(--light-gray);
+    border-radius: 12px;
+}
+
+.lesson-info p {
+    margin-bottom: 8px;
+}
+
+.lesson-info p:last-child {
+    margin-bottom: 0;
+}
+
+.lesson-info strong {
+    font-weight: 800;
+}

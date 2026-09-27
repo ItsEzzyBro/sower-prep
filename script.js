@@ -113,49 +113,36 @@ if (cancelLessonButton) {
     });
 }
 
-const lessonForm = document.getElementById("lessonForm");
+
+// ========================================
+// CREATE LESSON
+// ========================================
 
 const createPage =
     window.location.pathname.includes("create-lesson.html");
 
-if (lessonForm && createPage) {
+if (createPage) {
 
-    lessonForm.addEventListener("submit", async function (event) {
+    document.addEventListener("submit", async function (event) {
+
+        if (event.target.id !== "lessonForm") {
+            return;
+        }
 
         event.preventDefault();
 
-        const title =
-            document.getElementById("lessonTitle").value;
 
-        const biblePassage =
-            document.getElementById("biblePassage").value;
+        // Make sure the user is logged in
 
-        const ministry =
-            document.getElementById("ministry").value;
-
-        const ageGroup =
-            document.getElementById("ageGroup").value;
-
-        const lessonDate =
-            document.getElementById("lessonDate").value;
-
-        const description =
-            document.getElementById("description").value;
-
-        const activities =
-            document.getElementById("activities").value;
-
-        const notes =
-            document.getElementById("notes").value;
+        const {
+            data: { user },
+            error: userError
+        } = await supabaseClient.auth.getUser();
 
 
-        const { data: { user } } =
-            await supabaseClient.auth.getUser();
+        if (userError || !user) {
 
-
-        if (!user) {
-
-            alert("You must be logged in to create a lesson.");
+            alert("Please log in before creating a lesson.");
 
             window.location.href = "login.html";
 
@@ -163,37 +150,190 @@ if (lessonForm && createPage) {
         }
 
 
-        const { data, error } =
-        await supabaseClient
-        .from("lessons")
-        .insert([
-            {
-                user_id: user.id,
-                title,
-                bible_passage: biblePassage,
-                ministry,
-                age_group: ageGroup,
-                lesson_date: lessonDate,
-                description,
-                activities,
-                notes
-            }
-        ]);
+        // Get the selected ministry
 
+        const ministry =
+            document.getElementById("ministry")?.value;
+
+
+        // Get common lesson fields
+
+        const title =
+            document.getElementById("lessonTitle")?.value.trim();
+
+        const lessonDate =
+            document.getElementById("lessonDate")?.value;
+
+        const ageGroup =
+            document.getElementById("ageGroup")?.value || "2–5";
+
+        const week =
+            document.getElementById("week")?.value.trim();
+
+        const biblePassage =
+            document.getElementById("biblePassage")?.value.trim();
+
+
+        // Get curriculum-specific fields
+
+        const bibleStory =
+            document.getElementById("bibleStory")?.value.trim();
+
+        const storySummary =
+            document.getElementById("storySummary")?.value.trim();
+
+        const keyQuestion =
+            document.getElementById("keyQuestion")?.value.trim();
+
+        const bottomLine =
+            document.getElementById("bottomLine")?.value.trim();
+
+        const storyPoint =
+            document.getElementById("storyPoint")?.value.trim();
+
+        const memoryVerse =
+            document.getElementById("memoryVerse")?.value.trim();
+
+        const christConnection =
+            document.getElementById("christConnection")?.value.trim();
+
+        const activities =
+            document.getElementById("activities")?.value.trim();
+
+        const schedule =
+            document.getElementById("schedule")?.value.trim();
+
+        const reviewQuestions =
+            document.getElementById("reviewQuestions")?.value.trim();
+
+        const prayer =
+            document.getElementById("prayer")?.value.trim();
+
+        const takeHome =
+            document.getElementById("takeHome")?.value.trim();
+
+        const notes =
+            document.getElementById("notes")?.value.trim();
+
+
+        // Create the curriculum content object
+
+        const lessonContent = {
+
+            week: week,
+
+            bible_story: bibleStory,
+
+            bible_references: biblePassage,
+
+            story_summary: storySummary,
+
+            key_question: keyQuestion,
+
+            bottom_line: bottomLine,
+
+            story_point: storyPoint,
+
+            memory_verse: memoryVerse,
+
+            christ_connection: christConnection,
+
+            activities: activities,
+
+            suggested_schedule: schedule,
+
+            review_questions: reviewQuestions,
+
+            prayer: prayer,
+
+            take_home: takeHome,
+
+            teacher_notes: notes
+
+        };
+
+
+        // Save the lesson
+
+        const { data, error } = await supabaseClient
+
+            .from("lessons")
+
+            .insert([
+                {
+                    user_id: user.id,
+
+                    title: title,
+
+                    bible_passage: biblePassage,
+
+                    ministry: ministry,
+
+                    age_group: ageGroup,
+
+                    lesson_date: lessonDate,
+
+                    description: storySummary,
+
+                    activities: activities,
+
+                    notes: notes,
+
+                    lesson_content: lessonContent
+                }
+            ])
+
+            .select();
+
+
+        // Check for database error
 
         if (error) {
 
-            alert(error.message);
+            console.error("Create lesson error:", error);
+
+            alert(
+                "There was a problem saving your lesson:\n\n" +
+                error.message
+            );
 
             return;
         }
 
 
-        alert("Lesson saved successfully!");
+        // Make sure the lesson was actually saved
+
+        if (!data || data.length === 0) {
+
+            alert("The lesson was not saved.");
+
+            return;
+        }
+
+
+        // Success!
+
+        alert("Lesson saved successfully! 🎉");
 
         window.location.href = "dashboard.html";
 
     });
+
+
+    // ========================================
+    // CANCEL BUTTON
+    // ========================================
+
+    document.addEventListener("click", function (event) {
+
+        if (event.target.id === "cancelLessonButton") {
+
+            window.location.href = "dashboard.html";
+
+        }
+
+    });
+
 }
 
 const dashboardPage = document.getElementById("lessonList");
@@ -256,40 +396,68 @@ if (dashboardPage) {
 
             lessonCard.classList.add("lesson-card");
 
+            const content = lesson.lesson_content || {};
+
+            
         lessonCard.innerHTML = `
             <h3>${lesson.title}</h3>
 
             <span class="ministry-badge">
-                ${lesson.ministry}
+                ${lesson.ministry || "Ministry"}
             </span>
 
-            <p>
-                <strong>Bible Passage:</strong>
-                ${lesson.bible_passage}
-            </p>
+            <div class="lesson-info">
 
-            <p>
-                <strong>Age Group:</strong>
-                ${lesson.age_group}
-            </p>
+                <p>
+                    <strong>Age Group:</strong>
+                    ${lesson.age_group || "Not specified"}
+                </p>
 
-            <p>
-                <strong>Date:</strong>
-                ${lesson.lesson_date}
-            </p>
+                <p>
+                    <strong>Date:</strong>
+                    ${lesson.lesson_date || "Not specified"}
+                </p>
 
-            <p>
-                <strong>Description:</strong>
-                ${lesson.description}
-            </p>
+                <p>
+                    <strong>Week:</strong>
+                    ${content.week || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Bible Story:</strong>
+                    ${content.bible_story || lesson.title}
+                </p>
+
+                <p>
+                    <strong>Bible References:</strong>
+                    ${content.bible_references || lesson.bible_passage || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Bottom Line:</strong>
+                    ${content.bottom_line || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Memory Verse:</strong>
+                    ${content.memory_verse || "Not specified"}
+                </p>
+
+            </div>
 
             <div class="lesson-buttons">
 
-                <button class="edit-button" data-id="${lesson.id}">
+                <button
+                    class="edit-button"
+                    data-id="${lesson.id}"
+                >
                     Edit
                 </button>
 
-                <button class="delete-button" data-id="${lesson.id}">
+                <button
+                    class="delete-button"
+                    data-id="${lesson.id}"
+                >
                     Delete
                 </button>
 
