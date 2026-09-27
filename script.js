@@ -580,57 +580,649 @@ async function loadLesson() {
 const editPage =
     window.location.pathname.includes("edit-lesson.html");
 
-if (editForm && editPage) {
+if (editPage) {
 
-    editForm.addEventListener("submit", async function (event) {
+    const params = new URLSearchParams(window.location.search);
+    const lessonId = params.get("id");
+
+    const ministryForm =
+        document.getElementById("ministryForm");
+
+    const ministryDisplay =
+        document.getElementById("editMinistryDisplay");
+
+
+    async function loadLessonForEditing() {
+
+        if (!lessonId) {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+                    <p>No lesson was selected.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        // Check that the user is logged in
+
+        const {
+            data: { user },
+            error: userError
+        } = await supabaseClient.auth.getUser();
+
+
+        if (userError || !user) {
+
+            window.location.href = "login.html";
+
+            return;
+        }
+
+
+        // Get the lesson from Supabase
+
+        const {
+            data: lesson,
+            error
+        } = await supabaseClient
+            .from("lessons")
+            .select("*")
+            .eq("id", lessonId)
+            .eq("user_id", user.id)
+            .single();
+
+
+        if (error) {
+
+            console.error(
+                "Load lesson error:",
+                error
+            );
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+                    <p>
+                        There was a problem loading this lesson.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        if (!lesson) {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+                    <p>
+                        Lesson not found.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        console.log(
+            "Lesson loaded for editing:",
+            lesson
+        );
+
+
+        // Display the ministry
+
+        ministryDisplay.innerHTML = `
+            <div class="ministry-badge">
+                ${lesson.ministry || "Ministry"}
+            </div>
+        `;
+
+
+        // Get the saved curriculum information
+
+        const content =
+            lesson.lesson_content || {};
+
+
+        /*
+         * For now, we are building the
+         * Calvary Kids 2–5 edit form.
+         */
+
+        if (lesson.ministry === "Calvary Kids — 2–5") {
+
+            ministryForm.innerHTML = `
+
+                <form id="lessonForm">
+
+                    <h3 class="form-section-title">
+                        🌈 Calvary Kids — 2–5
+                    </h3>
+
+                    <p class="form-section-description">
+                        Update your Calvary Kids 2–5 lesson.
+                    </p>
+
+
+                    <div class="form-section">
+
+                        <h4>Lesson Information</h4>
+
+                        <label for="lessonTitle">
+                            Lesson Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lessonTitle"
+                            value="${lesson.title || ""}"
+                            required
+                        >
+
+
+                        <label for="lessonDate">
+                            Lesson Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="lessonDate"
+                            value="${lesson.lesson_date || ""}"
+                            required
+                        >
+
+
+                        <label for="week">
+                            Week
+                        </label>
+
+                        <input
+                            type="text"
+                            id="week"
+                            value="${content.week || ""}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Bible Story</h4>
+
+                        <label for="biblePassage">
+                            Bible References
+                        </label>
+
+                        <input
+                            type="text"
+                            id="biblePassage"
+                            value="${content.bible_references || lesson.bible_passage || ""}"
+                            required
+                        >
+
+
+                        <label for="bibleStory">
+                            Bible Story
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bibleStory"
+                            value="${content.bible_story || ""}"
+                        >
+
+
+                        <label for="storySummary">
+                            Bible Story Summary
+                        </label>
+
+                        <textarea
+                            id="storySummary"
+                            rows="5"
+                        >${content.story_summary || lesson.description || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teaching Points</h4>
+
+                        <label for="keyQuestion">
+                            Key Question
+                        </label>
+
+                        <input
+                            type="text"
+                            id="keyQuestion"
+                            value="${content.key_question || ""}"
+                        >
+
+
+                        <label for="bottomLine">
+                            Bottom Line
+                        </label>
+
+                        <textarea
+                            id="bottomLine"
+                            rows="3"
+                        >${content.bottom_line || ""}</textarea>
+
+
+                        <label for="storyPoint">
+                            Story Point
+                        </label>
+
+                        <textarea
+                            id="storyPoint"
+                            rows="3"
+                        >${content.story_point || ""}</textarea>
+
+
+                        <label for="memoryVerse">
+                            Memory Verse
+                        </label>
+
+                        <textarea
+                            id="memoryVerse"
+                            rows="3"
+                        >${content.memory_verse || ""}</textarea>
+
+
+                        <label for="christConnection">
+                            Christ Connection
+                        </label>
+
+                        <textarea
+                            id="christConnection"
+                            rows="5"
+                        >${content.christ_connection || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Activities</h4>
+
+                        <label for="activities">
+                            Activities
+                        </label>
+
+                        <textarea
+                            id="activities"
+                            rows="6"
+                        >${content.activities || lesson.activities || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Suggested Schedule</h4>
+
+                        <label for="schedule">
+                            Lesson Schedule
+                        </label>
+
+                        <textarea
+                            id="schedule"
+                            rows="6"
+                        >${content.suggested_schedule || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Bible Story Review</h4>
+
+                        <label for="reviewQuestions">
+                            Review Questions
+                        </label>
+
+                        <textarea
+                            id="reviewQuestions"
+                            rows="5"
+                        >${content.review_questions || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Prayer</h4>
+
+                        <label for="prayer">
+                            Prayer
+                        </label>
+
+                        <textarea
+                            id="prayer"
+                            rows="5"
+                        >${content.prayer || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Take Home</h4>
+
+                        <label for="takeHome">
+                            Parent / Take-Home Notes
+                        </label>
+
+                        <textarea
+                            id="takeHome"
+                            rows="5"
+                        >${content.take_home || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teacher Notes</h4>
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="5"
+                        >${content.teacher_notes || lesson.notes || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="button"
+                            id="cancelLessonButton"
+                        >
+                            Cancel
+                        </button>
+
+                        <button type="submit">
+                            Update Lesson
+                        </button>
+
+                    </div>
+
+                </form>
+            `;
+
+        }
+
+        else {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+
+                    <h3>
+                        ${lesson.ministry || "Ministry"}
+                    </h3>
+
+                    <p>
+                        This ministry's edit form
+                        has not been added yet.
+                    </p>
+
+                </div>
+            `;
+        }
+    }
+
+
+    loadLessonForEditing();
+}
+
+if (editPage) {
+
+    document.addEventListener("submit", async function (event) {
+
+        if (event.target.id !== "lessonForm") {
+            return;
+        }
 
         event.preventDefault();
+
+
+        // Get the lesson ID from the URL
 
         const params =
             new URLSearchParams(window.location.search);
 
-        const lessonId = params.get("id");
+        const lessonId =
+            params.get("id");
 
-        const { data: { user } } =
-            await supabaseClient.auth.getUser();
 
-        const { error } =
-            await supabaseClient
-                .from("lessons")
-                .update({
-                    title:
-                        document.getElementById("lessonTitle").value,
+        // Check the logged-in user
 
-                    bible_passage:
-                        document.getElementById("biblePassage").value,
+        const {
+            data: { user },
+            error: userError
+        } = await supabaseClient.auth.getUser();
 
-                    age_group:
-                        document.getElementById("ageGroup").value,
 
-                    lesson_date:
-                        document.getElementById("lessonDate").value,
+        if (userError || !user) {
 
-                    description:
-                        document.getElementById("description").value,
+            alert("Please log in before editing a lesson.");
 
-                    activities:
-                        document.getElementById("activities").value,
+            window.location.href = "login.html";
 
-                    notes:
-                        document.getElementById("notes").value
-                })
-                .eq("id", lessonId)
-                .eq("user_id", user.id);
-
-        if (error) {
-            alert(error.message);
             return;
         }
 
-        alert("Lesson updated!");
 
-        window.location.href = "dashboard.html";
+        // Get the existing lesson
+
+        const {
+            data: existingLesson,
+            error: lessonError
+        } = await supabaseClient
+            .from("lessons")
+            .select("*")
+            .eq("id", lessonId)
+            .eq("user_id", user.id)
+            .single();
+
+
+        if (lessonError || !existingLesson) {
+
+            console.error(
+                "Lesson lookup error:",
+                lessonError
+            );
+
+            alert("The lesson could not be found.");
+
+            return;
+        }
+
+
+        // Get the updated values
+
+        const title =
+            document.getElementById("lessonTitle")?.value.trim();
+
+        const lessonDate =
+            document.getElementById("lessonDate")?.value;
+
+        const week =
+            document.getElementById("week")?.value.trim();
+
+        const biblePassage =
+            document.getElementById("biblePassage")?.value.trim();
+
+        const bibleStory =
+            document.getElementById("bibleStory")?.value.trim();
+
+        const storySummary =
+            document.getElementById("storySummary")?.value.trim();
+
+        const keyQuestion =
+            document.getElementById("keyQuestion")?.value.trim();
+
+        const bottomLine =
+            document.getElementById("bottomLine")?.value.trim();
+
+        const storyPoint =
+            document.getElementById("storyPoint")?.value.trim();
+
+        const memoryVerse =
+            document.getElementById("memoryVerse")?.value.trim();
+
+        const christConnection =
+            document.getElementById("christConnection")?.value.trim();
+
+        const activities =
+            document.getElementById("activities")?.value.trim();
+
+        const schedule =
+            document.getElementById("schedule")?.value.trim();
+
+        const reviewQuestions =
+            document.getElementById("reviewQuestions")?.value.trim();
+
+        const prayer =
+            document.getElementById("prayer")?.value.trim();
+
+        const takeHome =
+            document.getElementById("takeHome")?.value.trim();
+
+        const notes =
+            document.getElementById("notes")?.value.trim();
+
+
+        // Put the curriculum information
+        // back into lesson_content
+
+        const lessonContent = {
+
+            week: week,
+
+            bible_story: bibleStory,
+
+            bible_references: biblePassage,
+
+            story_summary: storySummary,
+
+            key_question: keyQuestion,
+
+            bottom_line: bottomLine,
+
+            story_point: storyPoint,
+
+            memory_verse: memoryVerse,
+
+            christ_connection: christConnection,
+
+            activities: activities,
+
+            suggested_schedule: schedule,
+
+            review_questions: reviewQuestions,
+
+            prayer: prayer,
+
+            take_home: takeHome,
+
+            teacher_notes: notes
+        };
+
+
+        // Update the lesson in Supabase
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("lessons")
+            .update({
+
+                title: title,
+
+                bible_passage: biblePassage,
+
+                lesson_date: lessonDate,
+
+                description: storySummary,
+
+                activities: activities,
+
+                notes: notes,
+
+                lesson_content: lessonContent
+
+            })
+            .eq("id", lessonId)
+            .eq("user_id", user.id)
+            .select();
+
+
+        if (error) {
+
+            console.error(
+                "Update lesson error:",
+                error
+            );
+
+            alert(
+                "There was a problem updating your lesson:\n\n" +
+                error.message
+            );
+
+            return;
+        }
+
+
+        if (!data || data.length === 0) {
+
+            alert(
+                "The lesson was not updated."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "Lesson updated successfully! 🎉"
+        );
+
+
+        // Return to the dashboard
+
+        window.location.href =
+            "dashboard.html";
+
     });
+
+
+    // Cancel button
+
+    document.addEventListener("click", function (event) {
+
+        if (
+            event.target.id ===
+            "cancelLessonButton"
+        ) {
+
+            window.location.href =
+                "dashboard.html";
+        }
+
+    });
+
 }
 
 // ========================================
