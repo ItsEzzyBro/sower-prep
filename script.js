@@ -206,6 +206,9 @@ if (createPage) {
         const reviewQuestions =
             document.getElementById("reviewQuestions")?.value.trim();
 
+        const discussionQuestions =
+            document.getElementById("discussionQuestions")?.value.trim();
+
         const prayer =
             document.getElementById("prayer")?.value.trim();
 
@@ -244,6 +247,8 @@ if (createPage) {
 
             review_questions: reviewQuestions,
 
+            discussion_questions: discussionQuestions,
+            
             prayer: prayer,
 
             take_home: takeHome,
@@ -962,21 +967,249 @@ if (editPage) {
 
         }
 
-        else {
+        else if (lesson.ministry === "Calvary Kids — K–3") {
 
             ministryForm.innerHTML = `
-                <div class="empty-message">
 
-                    <h3>
-                        ${lesson.ministry || "Ministry"}
+                <form id="lessonForm">
+
+                    <input
+                        type="hidden"
+                        id="ageGroup"
+                        value="K–3"
+                    >
+
+                    <h3 class="form-section-title">
+                        🌈 Calvary Kids — K–3
                     </h3>
 
-                    <p>
-                        This ministry's edit form
-                        has not been added yet.
+                    <p class="form-section-description">
+                        Update your Calvary Kids K–3 lesson.
                     </p>
 
-                </div>
+
+                    <div class="form-section">
+
+                        <h4>Lesson Information</h4>
+
+                        <label for="lessonTitle">
+                            Lesson Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lessonTitle"
+                            value="${lesson.title || ""}"
+                            required
+                        >
+
+                        <label for="lessonDate">
+                            Lesson Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="lessonDate"
+                            value="${lesson.lesson_date || ""}"
+                            required
+                        >
+
+                        <label for="week">
+                            Week
+                        </label>
+
+                        <input
+                            type="text"
+                            id="week"
+                            value="${content.week || ""}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Bible Story</h4>
+
+                        <label for="bibleStory">
+                            Bible Story
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bibleStory"
+                            value="${content.bible_story || ""}"
+                        >
+
+                        <label for="biblePassage">
+                            Bible References
+                        </label>
+
+                        <input
+                            type="text"
+                            id="biblePassage"
+                            value="${content.bible_references || lesson.bible_passage || ""}"
+                            required
+                        >
+
+                        <label for="storySummary">
+                            Bible Story Summary
+                        </label>
+
+                        <textarea
+                            id="storySummary"
+                            rows="5"
+                        >${content.story_summary || lesson.description || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teaching Points</h4>
+
+                        <label for="bottomLine">
+                            Bottom Line
+                        </label>
+
+                        <textarea
+                            id="bottomLine"
+                            rows="3"
+                        >${content.bottom_line || ""}</textarea>
+
+                        <label for="storyPoint">
+                            Story Point
+                        </label>
+
+                        <textarea
+                            id="storyPoint"
+                            rows="3"
+                        >${content.story_point || ""}</textarea>
+
+                        <label for="memoryVerse">
+                            Memory Verse
+                        </label>
+
+                        <textarea
+                            id="memoryVerse"
+                            rows="3"
+                        >${content.memory_verse || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Discussion Questions</h4>
+
+                        <label for="discussionQuestions">
+                            Discussion Questions
+                        </label>
+
+                        <textarea
+                            id="discussionQuestions"
+                            rows="7"
+                        >${content.discussion_questions || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Activities</h4>
+
+                        <label for="activities">
+                            Activities
+                        </label>
+
+                        <textarea
+                            id="activities"
+                            rows="7"
+                        >${content.activities || lesson.activities || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Review the Story</h4>
+
+                        <label for="reviewQuestions">
+                            Review Questions
+                        </label>
+
+                        <textarea
+                            id="reviewQuestions"
+                            rows="6"
+                        >${content.review_questions || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Take Home</h4>
+
+                        <label for="takeHome">
+                            Take-Home Information
+                        </label>
+
+                        <textarea
+                            id="takeHome"
+                            rows="5"
+                        >${content.take_home || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Closing Prayer</h4>
+
+                        <label for="prayer">
+                            Prayer
+                        </label>
+
+                        <textarea
+                            id="prayer"
+                            rows="5"
+                        >${content.prayer || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teacher Notes</h4>
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="5"
+                        >${content.teacher_notes || lesson.notes || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="button"
+                            id="cancelLessonButton"
+                        >
+                            Cancel
+                        </button>
+
+                        <button type="submit">
+                            Update Lesson
+                        </button>
+
+                    </div>
+
+                </form>
             `;
         }
     }
@@ -1093,6 +1326,9 @@ if (editPage) {
         const reviewQuestions =
             document.getElementById("reviewQuestions")?.value.trim();
 
+        const discussionQuestions =
+            document.getElementById("discussionQuestions")?.value.trim();
+
         const prayer =
             document.getElementById("prayer")?.value.trim();
 
@@ -1131,6 +1367,8 @@ if (editPage) {
             suggested_schedule: schedule,
 
             review_questions: reviewQuestions,
+
+            discussion_questions: discussionQuestions,
 
             prayer: prayer,
 
@@ -1562,17 +1800,262 @@ if (ministrySelector && ministryForm) {
         else if (selectedMinistry === "Calvary Kids — K–3") {
 
             ministryForm.innerHTML = `
-                <div class="empty-message">
 
-                    <h3>🌈 Calvary Kids — K–3</h3>
+                <form id="lessonForm">
 
-                    <p>
-                        The K–3 lesson form will appear here.
+                    <input
+                        type="hidden"
+                        id="ageGroup"
+                        value="K–3"
+                    >
+
+                    <h3 class="form-section-title">
+                        🌈 Calvary Kids — K–3
+                    </h3>
+
+                    <p class="form-section-description">
+                        Create a Calvary Kids K–3 lesson.
                     </p>
 
-                </div>
-            `;
 
+                    <div class="form-section">
+
+                        <h4>Lesson Information</h4>
+
+                        <label for="lessonTitle">
+                            Lesson Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lessonTitle"
+                            placeholder="Example: Jesus Taught about the Kingdom"
+                            required
+                        >
+
+
+                        <label for="lessonDate">
+                            Lesson Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="lessonDate"
+                            required
+                        >
+
+
+                        <label for="week">
+                            Week
+                        </label>
+
+                        <input
+                            type="text"
+                            id="week"
+                            placeholder="Example: Week 2"
+                        >
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Bible Story</h4>
+
+                        <label for="bibleStory">
+                            Bible Story
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bibleStory"
+                            placeholder="Enter the Bible story"
+                        >
+
+
+                        <label for="biblePassage">
+                            Bible References
+                        </label>
+
+                        <input
+                            type="text"
+                            id="biblePassage"
+                            placeholder="Example: Matthew 13; Mark 4"
+                            required
+                        >
+
+
+                        <label for="storySummary">
+                            Bible Story Summary
+                        </label>
+
+                        <textarea
+                            id="storySummary"
+                            rows="5"
+                            placeholder="Write a summary of the Bible story..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teaching Points</h4>
+
+                        <label for="bottomLine">
+                            Bottom Line
+                        </label>
+
+                        <textarea
+                            id="bottomLine"
+                            rows="3"
+                            placeholder="What should children remember?"
+                        ></textarea>
+
+
+                        <label for="storyPoint">
+                            Story Point
+                        </label>
+
+                        <textarea
+                            id="storyPoint"
+                            rows="3"
+                            placeholder="What is the main point of the story?"
+                        ></textarea>
+
+
+                        <label for="memoryVerse">
+                            Memory Verse
+                        </label>
+
+                        <textarea
+                            id="memoryVerse"
+                            rows="3"
+                            placeholder="Enter the memory verse..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Discussion Questions</h4>
+
+                        <label for="discussionQuestions">
+                            Discussion Questions
+                        </label>
+
+                        <textarea
+                            id="discussionQuestions"
+                            rows="7"
+                            placeholder="Enter discussion questions for the children..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Activities</h4>
+
+                        <label for="activities">
+                            Activities
+                        </label>
+
+                        <textarea
+                            id="activities"
+                            rows="7"
+                            placeholder="Enter activities, games, or activity pages..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Review the Story</h4>
+
+                        <label for="reviewQuestions">
+                            Review Questions
+                        </label>
+
+                        <textarea
+                            id="reviewQuestions"
+                            rows="6"
+                            placeholder="Enter questions to review the Bible story..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Take Home</h4>
+
+                        <label for="takeHome">
+                            Take-Home Information
+                        </label>
+
+                        <textarea
+                            id="takeHome"
+                            rows="5"
+                            placeholder="Enter information or activities children can take home..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Closing Prayer</h4>
+
+                        <label for="prayer">
+                            Prayer
+                        </label>
+
+                        <textarea
+                            id="prayer"
+                            rows="5"
+                            placeholder="Enter the closing prayer..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teacher Notes</h4>
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="5"
+                            placeholder="Add any additional teacher notes..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="button"
+                            id="cancelLessonButton"
+                        >
+                            Cancel
+                        </button>
+
+                        <button type="submit">
+                            Save Lesson
+                        </button>
+
+                    </div>
+
+                </form>
+            `;
         }
 
 
