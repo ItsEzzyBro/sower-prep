@@ -1,3 +1,28 @@
+/* =========================================
+   CALVARY KIDS + YOUTH
+   Children's Ministry Teacher Assistant
+   ========================================= */
+
+/* ---------- Brand Colors ---------- */
+
+:root {
+    --youth-black: #000000;
+    --youth-white: #ffffff;
+
+    --kids-pink: #ff6699;
+    --kids-coral: #ff7375;
+    --kids-yellow: #ffab14;
+    --kids-mint: #66c9a8;
+    --kids-teal: #00b5bd;
+
+    --light-gray: #f7f7f7;
+    --medium-gray: #666666;
+    --border-gray: #e5e5e5;
+}
+
+
+/* ---------- General ---------- */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,10 +30,36 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f3ff;
-    color: #333333;
+    font-family: "Poppins", Arial, sans-serif;
+    background-color: var(--youth-white);
+    color: var(--youth-black);
+    line-height: 1.5;
 }
+
+
+/* ---------- Buttons ---------- */
+
+button {
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease,
+                opacity 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+
+/* =========================================
+   WELCOME PAGE
+   ========================================= */
 
 .welcome-container {
     min-height: 100vh;
@@ -20,36 +71,53 @@ body {
 
     text-align: center;
 
-    padding: 20px;
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #ffffff 65%,
+            #fff3f7 100%
+        );
 }
 
 .welcome-container h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 0;
 }
 
 .welcome-container h2 {
-    font-size: 30px;
+    font-size: 42px;
+    font-weight: 900;
     margin-bottom: 20px;
+
+    color: var(--kids-teal);
 }
 
 .welcome-container p {
+    max-width: 550px;
+
     font-size: 18px;
-    max-width: 500px;
-    line-height: 1.6;
-    margin-bottom: 30px;
+    color: var(--medium-gray);
+
+    margin-bottom: 35px;
 }
 
-button {
-    padding: 12px 24px;
+#getStartedButton {
+    background-color: var(--kids-pink);
+    color: white;
 
+    padding: 15px 32px;
     font-size: 16px;
-
-    border: none;
-    border-radius: 8px;
-
-    cursor: pointer;
 }
+
+
+/* =========================================
+   LOGIN + REGISTER
+   ========================================= */
 
 .login-container {
     min-height: 100vh;
@@ -59,214 +127,415 @@ button {
     justify-content: center;
     align-items: center;
 
-    padding: 20px;
+    padding: 30px;
 }
 
 .login-container h1 {
+    font-size: 38px;
+    font-weight: 900;
+
     margin-bottom: 10px;
 }
 
-.login-container p {
-    margin-bottom: 20px;
+.login-container > p {
+    color: var(--medium-gray);
+    margin-bottom: 25px;
+    text-align: center;
 }
 
-#loginForm {
+#loginForm,
+#registerForm {
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
 
     display: flex;
     flex-direction: column;
 
-    gap: 10px;
+    gap: 8px;
 }
 
-#loginForm input {
-    padding: 12px;
+#loginForm label,
+#registerForm label {
+    font-size: 14px;
+    font-weight: 700;
 
+    margin-top: 8px;
+}
+
+#loginForm input,
+#registerForm input {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    font-family: inherit;
     font-size: 16px;
 
-    border: 1px solid #cccccc;
-    border-radius: 6px;
+    border: 2px solid var(--border-gray);
+    border-radius: 10px;
+
+    outline: none;
+
+    transition: border-color 0.2s ease;
 }
 
-#loginForm button {
-    margin-top: 10px;
+#loginForm input:focus,
+#registerForm input:focus {
+    border-color: var(--kids-teal);
 }
+
+#loginForm button,
+#registerForm button {
+    margin-top: 15px;
+
+    background-color: var(--kids-teal);
+    color: white;
+}
+
+.login-container a {
+    color: var(--kids-teal);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   DASHBOARD HEADER
+   ========================================= */
 
 .dashboard-header {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
 
-    padding: 20px 40px;
+    padding: 18px 40px;
 
-    background-color: white;
-
-    border-bottom: 1px solid #dddddd;
+    background-color: var(--youth-black);
+    color: var(--youth-white);
 }
 
 .dashboard-header h1 {
-    font-size: 24px;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
 }
 
 .dashboard-header button {
-    padding: 10px 18px;
+    background-color: white;
+    color: black;
+
+    padding: 9px 18px;
 }
 
 
+/* =========================================
+   DASHBOARD
+   ========================================= */
+
 .dashboard-container {
-    max-width: 1000px;
+    max-width: 1100px;
 
     margin: 0 auto;
 
-    padding: 40px 20px;
+    padding: 50px 25px;
 }
 
-
 .welcome-section {
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .welcome-section h2 {
-    font-size: 30px;
+    font-size: 38px;
+    font-weight: 900;
 
-    margin-bottom: 10px;
+    letter-spacing: -1px;
+
+    margin-bottom: 8px;
 }
 
 .welcome-section p {
-    font-size: 18px;
+    color: var(--medium-gray);
+    font-size: 17px;
 }
 
+
+/* ---------- Create Lesson ---------- */
 
 .lesson-actions {
-    margin-bottom: 40px;
+    margin-bottom: 45px;
 }
 
-
-.lesson-actions button {
-    background-color: #333333;
-
+#createLessonButton {
+    background-color: var(--kids-pink);
     color: white;
-
-    padding: 14px 24px;
-
-    border-radius: 8px;
 }
 
+
+/* Fix selector */
+
+#createLessonButton {
+    background-color: var(--kids-pink);
+    color: white;
+}
+
+
+/* =========================================
+   LESSON SECTION
+   ========================================= */
 
 .lessons-section h2 {
+    font-size: 28px;
+    font-weight: 900;
+
     margin-bottom: 20px;
 }
 
-
 #lessonList {
-    background-color: white;
-
-    border: 1px solid #dddddd;
-
-    border-radius: 10px;
-
-    padding: 30px;
+    width: 100%;
 }
-
 
 .empty-message {
+    padding: 35px;
+
+    background-color: var(--light-gray);
+
+    border-radius: 15px;
+
     text-align: center;
 
-    color: #666666;
+    color: var(--medium-gray);
 }
 
+
+/* =========================================
+   LESSON CARDS
+   ========================================= */
+
+.lesson-card {
+    background-color: white;
+
+    border: 2px solid var(--border-gray);
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* Color accent at top of card */
+
+.lesson-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 6px;
+
+    background: linear-gradient(
+        90deg,
+        var(--kids-pink),
+        var(--kids-coral),
+        var(--kids-yellow),
+        var(--kids-mint),
+        var(--kids-teal)
+    );
+}
+
+.lesson-card h3 {
+    font-size: 24px;
+    font-weight: 900;
+
+    margin-bottom: 18px;
+
+    padding-top: 5px;
+}
+
+.lesson-card p {
+    margin-bottom: 9px;
+
+    color: #333333;
+}
+
+.lesson-card strong {
+    font-weight: 700;
+}
+
+
+/* =========================================
+   LESSON BUTTONS
+   ========================================= */
+
+.lesson-buttons {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.edit-button {
+    background-color: var(--kids-teal);
+    color: white;
+
+    padding: 10px 20px;
+}
+
+.delete-button {
+    background-color: var(--youth-black);
+    color: white;
+
+    padding: 10px 20px;
+}
+
+
+/* =========================================
+   CREATE / EDIT LESSON FORM
+   ========================================= */
+
 .form-container {
-    max-width: 700px;
+    max-width: 750px;
 
     margin: 0 auto;
 
-    padding: 40px 20px;
+    padding: 50px 25px;
 }
 
 .form-container h2 {
-    font-size: 30px;
+    font-size: 38px;
+    font-weight: 900;
 
     margin-bottom: 10px;
 }
 
 .form-container > p {
-    margin-bottom: 30px;
+    color: var(--medium-gray);
 
-    color: #666666;
+    margin-bottom: 35px;
 }
-
 
 #lessonForm {
     display: flex;
-
     flex-direction: column;
 
-    gap: 10px;
+    gap: 8px;
 }
 
+#lessonForm label {
+    font-size: 14px;
+    font-weight: 700;
+
+    margin-top: 10px;
+}
 
 #lessonForm input,
 #lessonForm select,
 #lessonForm textarea {
     width: 100%;
 
-    padding: 12px;
-
-    font-size: 16px;
+    padding: 14px 16px;
 
     font-family: inherit;
+    font-size: 16px;
 
-    border: 1px solid #cccccc;
+    border: 2px solid var(--border-gray);
+    border-radius: 10px;
 
-    border-radius: 6px;
-
-    margin-bottom: 15px;
+    outline: none;
 }
 
+#lessonForm input:focus,
+#lessonForm select:focus,
+#lessonForm textarea:focus {
+    border-color: var(--kids-teal);
+}
 
 #lessonForm textarea {
     resize: vertical;
 }
 
 
+/* =========================================
+   FORM BUTTONS
+   ========================================= */
+
 .form-buttons {
     display: flex;
 
-    gap: 10px;
+    gap: 12px;
 
-    margin-top: 10px;
+    margin-top: 25px;
 }
-
 
 .form-buttons button {
     flex: 1;
 }
 
-.lesson-card {
-    background-color: white;
-    border: 1px solid #dddddd;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
+.form-buttons button[type="submit"] {
+    background-color: var(--kids-pink);
+    color: white;
 }
 
-.lesson-card h3 {
-    margin-bottom: 15px;
+.form-buttons button[type="button"] {
+    background-color: var(--youth-black);
+    color: white;
 }
 
-.lesson-card p {
-    margin-bottom: 8px;
-    line-height: 1.5;
-}
 
-.lesson-buttons {
-    margin-top: 20px;
-}
+/* =========================================
+   MOBILE
+   ========================================= */
 
-.delete-button {
-    background-color: #eeeeee;
-    color: #333333;
-    padding: 10px 18px;
+@media (max-width: 700px) {
+
+    .dashboard-header {
+        padding: 15px 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 17px;
+    }
+
+    .dashboard-container {
+        padding: 35px 18px;
+    }
+
+    .welcome-section h2 {
+        font-size: 30px;
+    }
+
+    .welcome-container h1 {
+        font-size: 38px;
+    }
+
+    .welcome-container h2 {
+        font-size: 32px;
+    }
+
+    .lesson-buttons {
+        flex-direction: column;
+    }
+
+    .lesson-buttons button {
+        width: 100%;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
 }
