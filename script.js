@@ -453,16 +453,20 @@ if (dashboardPage) {
             <div class="lesson-buttons">
 
                 <button
+                    class="view-button"
+                    data-id="${lesson.id}">
+                    View
+                </button>
+
+                <button
                     class="edit-button"
-                    data-id="${lesson.id}"
-                >
+                    data-id="${lesson.id}">
                     Edit
                 </button>
 
                 <button
                     class="delete-button"
-                    data-id="${lesson.id}"
-                >
+                    data-id="${lesson.id}">
                     Delete
                 </button>
 
@@ -518,10 +522,250 @@ if (dashboardPage) {
                 `edit-lesson.html?id=${lesson.id}`;
 
             });
+
+            const viewButton =
+            lessonCard.querySelector(".view-button");
+
+            viewButton.addEventListener(
+                "click",
+                function () {
+
+                    window.location.href =
+                        `view-lesson.html?id=${lesson.id}`;
+
+                }
+            );
         });
     }
 
     loadDashboard();
+}
+
+const viewLessonPage = document.getElementById("viewLesson");
+
+if (viewLessonPage) {
+
+    async function loadViewLesson() {
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const lessonId =
+            params.get("id");
+
+        if (!lessonId) {
+
+            viewLessonPage.innerHTML = `
+                <p class="empty-message">
+                    Lesson not found.
+                </p>
+            `;
+
+            return;
+        }
+
+        const { data: { user } } =
+            await supabaseClient.auth.getUser();
+
+        if (!user) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+        }
+
+        const { data: lesson, error } =
+            await supabaseClient
+                .from("lessons")
+                .select("*")
+                .eq("id", lessonId)
+                .eq("user_id", user.id)
+                .single();
+
+        if (error) {
+
+            console.error(error);
+
+            viewLessonPage.innerHTML = `
+                <p class="empty-message">
+                    Unable to load lesson.
+                </p>
+            `;
+
+            return;
+        }
+
+        const content =
+            lesson.lesson_content || {};
+
+        viewLessonPage.innerHTML = `
+
+            <h2>${lesson.title}</h2>
+
+            <span class="ministry-badge">
+                ${lesson.ministry || "Ministry"}
+            </span>
+
+            <div class="form-section">
+
+                <h4>Lesson Information</h4>
+
+                <p>
+                    <strong>Age Group:</strong>
+                    ${lesson.age_group || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Date:</strong>
+                    ${lesson.lesson_date || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Week:</strong>
+                    ${content.week || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Bible Story</h4>
+
+                <p>
+                    <strong>Bible Story:</strong>
+                    ${content.bible_story || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Bible References:</strong>
+                    ${content.bible_references ||
+                    lesson.bible_passage ||
+                    "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Summary:</strong>
+                    ${content.story_summary || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Memory Verse</h4>
+
+                <p>
+                    ${content.memory_verse || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Teaching Points</h4>
+
+                <p>
+                    <strong>Key Question:</strong>
+                    ${content.key_question || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Bottom Line:</strong>
+                    ${content.bottom_line || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Story Point:</strong>
+                    ${content.story_point || "Not specified"}
+                </p>
+
+                <p>
+                    <strong>Christ Connection:</strong>
+                    ${content.christ_connection || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Discussion Questions</h4>
+
+                <p>
+                    ${content.discussion_questions || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Activities</h4>
+
+                <p>
+                    ${content.activities ||
+                    lesson.activities ||
+                    "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Suggested Schedule</h4>
+
+                <p>
+                    ${content.suggested_schedule || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Review Questions</h4>
+
+                <p>
+                    ${content.review_questions || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Prayer</h4>
+
+                <p>
+                    ${content.prayer || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Take Home</h4>
+
+                <p>
+                    ${content.take_home || "Not specified"}
+                </p>
+
+            </div>
+
+            <div class="form-section">
+
+                <h4>Teacher Notes</h4>
+
+                <p>
+                    ${content.teacher_notes ||
+                    lesson.notes ||
+                    "Not specified"}
+                </p>
+
+            </div>
+
+        `;
+    }
+
+    loadViewLesson();
+
 }
 
 const editForm =
