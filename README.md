@@ -77,7 +77,7 @@ Row Level Security policies ensure that authenticated users can access and modif
 ## Project Structure
 
 ```text
-childrens-ministry-teacher-assistant/
+sower-prep/
 │
 ├── index.html
 ├── login.html
@@ -90,6 +90,7 @@ childrens-ministry-teacher-assistant/
 ├── script.js
 ├── supabase.js
 └── README.md
+```
 
 ## GitHub Repository
 
@@ -104,13 +105,12 @@ childrens-ministry-teacher-assistant/
 To run Sower Prep locally:
 
 1. Clone the repository to your computer.
-
 2. Open the project folder in Visual Studio Code.
-
 3. Configure the Supabase connection in `supabase.js`.
-
 4. Run the application using the Live Server extension in Visual Studio Code.
-
 5. Open the application in your browser.
-
 6. Register a new account or log in to begin creating and managing lessons.
+
+## Demo Video
+
+Demo video coming soon.
