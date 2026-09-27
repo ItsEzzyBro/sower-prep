@@ -115,11 +115,74 @@ if (cancelLessonButton) {
 const lessonForm = document.getElementById("lessonForm");
 
 if (lessonForm) {
-    lessonForm.addEventListener("submit", function (event) {
+
+    lessonForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
-        alert("Lesson form submitted! We will connect this to the database next.");
+        const title =
+            document.getElementById("lessonTitle").value;
+
+        const biblePassage =
+            document.getElementById("biblePassage").value;
+
+        const ageGroup =
+            document.getElementById("ageGroup").value;
+
+        const lessonDate =
+            document.getElementById("lessonDate").value;
+
+        const description =
+            document.getElementById("description").value;
+
+        const activities =
+            document.getElementById("activities").value;
+
+        const notes =
+            document.getElementById("notes").value;
+
+
+        const { data: { user } } =
+            await supabaseClient.auth.getUser();
+
+
+        if (!user) {
+
+            alert("You must be logged in to create a lesson.");
+
+            window.location.href = "login.html";
+
+            return;
+        }
+
+
+        const { data, error } =
+            await supabaseClient
+                .from("lessons")
+                .insert([
+                    {
+                        title: title,
+                        bible_passage: biblePassage,
+                        age_group: ageGroup,
+                        lesson_date: lessonDate,
+                        description: description,
+                        activities: activities,
+                        notes: notes
+                    }
+                ]);
+
+
+        if (error) {
+
+            alert(error.message);
+
+            return;
+        }
+
+
+        alert("Lesson saved successfully!");
+
+        window.location.href = "dashboard.html";
 
     });
 }
@@ -128,15 +191,77 @@ const dashboardPage = document.getElementById("lessonList");
 
 if (dashboardPage) {
 
-    async function checkUser() {
+    async function loadDashboard() {
 
-        const { data: { user }, error } =
+        const { data: { user }, error: userError } =
             await supabaseClient.auth.getUser();
 
-        if (error || !user) {
+        if (userError || !user) {
             window.location.href = "login.html";
+            return;
         }
+
+        const { data: lessons, error: lessonError } =
+            await supabaseClient
+                .from("lessons")
+                .select("*")
+                .order("lesson_date", { ascending: true });
+
+        if (lessonError) {
+            dashboardPage.innerHTML =
+                "<p>Unable to load lessons.</p>";
+
+            console.error(lessonError);
+
+            return;
+        }
+
+        if (lessons.length === 0) {
+            dashboardPage.innerHTML = `
+                <p class="empty-message">
+                    No lessons yet.
+                    Create your first lesson to get started!
+                </p>
+            `;
+
+            return;
+        }
+
+        dashboardPage.innerHTML = "";
+
+        lessons.forEach(function (lesson) {
+
+            const lessonCard = document.createElement("div");
+
+            lessonCard.classList.add("lesson-card");
+
+            lessonCard.innerHTML = `
+                <h3>${lesson.title}</h3>
+
+                <p>
+                    <strong>Bible Passage:</strong>
+                    ${lesson.bible_passage}
+                </p>
+
+                <p>
+                    <strong>Age Group:</strong>
+                    ${lesson.age_group}
+                </p>
+
+                <p>
+                    <strong>Date:</strong>
+                    ${lesson.lesson_date}
+                </p>
+
+                <p>
+                    <strong>Description:</strong>
+                    ${lesson.description}
+                </p>
+            `;
+
+            dashboardPage.appendChild(lessonCard);
+        });
     }
 
-    checkUser();
+    loadDashboard();
 }
