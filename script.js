@@ -464,3 +464,408 @@ if (editForm && editPage) {
         window.location.href = "dashboard.html";
     });
 }
+
+// ========================================
+// MINISTRY-SPECIFIC LESSON FORM
+// ========================================
+
+const ministrySelector = document.getElementById("ministry");
+const ministryForm = document.getElementById("ministryForm");
+
+if (ministrySelector && ministryForm) {
+
+    ministrySelector.addEventListener("change", function () {
+
+        const selectedMinistry = ministrySelector.value;
+
+        if (selectedMinistry === "") {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+                    <p>
+                        Please select a ministry above to begin.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        if (selectedMinistry === "Calvary Kids — 2–5") {
+
+            ministryForm.innerHTML = `
+
+                <form id="lessonForm">
+
+                    <input
+                        type="hidden"
+                        id="ageGroup"
+                        value="2–5"
+                    >
+
+                    <h3 class="form-section-title">
+                        🌈 Calvary Kids — 2–5
+                    </h3>
+
+                    <p class="form-section-description">
+                        Create a lesson using the Calvary Kids 2–5 curriculum structure.
+                    </p>
+
+
+                    <!-- BASIC LESSON INFORMATION -->
+
+                    <div class="form-section">
+
+                        <h4>Lesson Information</h4>
+
+                        <label for="lessonTitle">
+                            Lesson Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lessonTitle"
+                            placeholder="Example: Jesus Calmed a Storm"
+                            required
+                        >
+
+
+                        <label for="lessonDate">
+                            Lesson Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="lessonDate"
+                            required
+                        >
+
+
+                        <label for="week">
+                            Week
+                        </label>
+
+                        <input
+                            type="text"
+                            id="week"
+                            placeholder="Example: Week 3"
+                        >
+
+                    </div>
+
+
+                    <!-- BIBLE STORY -->
+
+                    <div class="form-section">
+
+                        <h4>Bible Story</h4>
+
+                        <label for="biblePassage">
+                            Bible References
+                        </label>
+
+                        <input
+                            type="text"
+                            id="biblePassage"
+                            placeholder="Example: Matthew 8; Mark 4; Luke 8"
+                            required
+                        >
+
+
+                        <label for="bibleStory">
+                            Bible Story
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bibleStory"
+                            placeholder="Example: Jesus Calmed a Storm"
+                        >
+
+
+                        <label for="storySummary">
+                            Bible Story Summary
+                        </label>
+
+                        <textarea
+                            id="storySummary"
+                            rows="5"
+                            placeholder="Write a short summary of the Bible story..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- TEACHING POINTS -->
+
+                    <div class="form-section">
+
+                        <h4>Teaching Points</h4>
+
+                        <label for="keyQuestion">
+                            Key Question
+                        </label>
+
+                        <input
+                            type="text"
+                            id="keyQuestion"
+                            placeholder="Example: Is the Bible true?"
+                        >
+
+
+                        <label for="bottomLine">
+                            Bottom Line
+                        </label>
+
+                        <textarea
+                            id="bottomLine"
+                            rows="3"
+                            placeholder="Example: The Bible is true."
+                        ></textarea>
+
+
+                        <label for="storyPoint">
+                            Story Point
+                        </label>
+
+                        <textarea
+                            id="storyPoint"
+                            rows="3"
+                            placeholder="What should the children remember from the Bible story?"
+                        ></textarea>
+
+
+                        <label for="memoryVerse">
+                            Memory Verse
+                        </label>
+
+                        <textarea
+                            id="memoryVerse"
+                            rows="3"
+                            placeholder="Enter the memory verse..."
+                        ></textarea>
+
+
+                        <label for="christConnection">
+                            Christ Connection
+                        </label>
+
+                        <textarea
+                            id="christConnection"
+                            rows="5"
+                            placeholder="Explain how this lesson points children to Jesus..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- ACTIVITIES -->
+
+                    <div class="form-section">
+
+                        <h4>Activities</h4>
+
+                        <label for="activities">
+                            Activities
+                        </label>
+
+                        <textarea
+                            id="activities"
+                            rows="6"
+                            placeholder="Example: Play a Fall Asleep and Wake Up Game..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- SCHEDULE -->
+
+                    <div class="form-section">
+
+                        <h4>Suggested Schedule</h4>
+
+                        <label for="schedule">
+                            Lesson Schedule
+                        </label>
+
+                        <textarea
+                            id="schedule"
+                            rows="6"
+                            placeholder="Example:
+                            Small Group — 15 minutes
+                            Large Group — 20 minutes
+                            Small Group — 25 minutes"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- REVIEW -->
+
+                    <div class="form-section">
+
+                        <h4>Bible Story Review</h4>
+
+                        <label for="reviewQuestions">
+                            Review Questions
+                        </label>
+
+                        <textarea
+                            id="reviewQuestions"
+                            rows="5"
+                            placeholder="Enter questions to review the Bible story with the children..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- PRAYER -->
+
+                    <div class="form-section">
+
+                        <h4>Prayer</h4>
+
+                        <label for="prayer">
+                            Prayer
+                        </label>
+
+                        <textarea
+                            id="prayer"
+                            rows="5"
+                            placeholder="Enter the prayer or prayer instructions..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- TAKE HOME -->
+
+                    <div class="form-section">
+
+                        <h4>Take Home</h4>
+
+                        <label for="takeHome">
+                            Parent / Take-Home Notes
+                        </label>
+
+                        <textarea
+                            id="takeHome"
+                            rows="5"
+                            placeholder="Add information parents can use at home..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- ADDITIONAL NOTES -->
+
+                    <div class="form-section">
+
+                        <h4>Teacher Notes</h4>
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="5"
+                            placeholder="Add any additional teacher notes..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="button"
+                            id="cancelLessonButton"
+                        >
+                            Cancel
+                        </button>
+
+                        <button type="submit">
+                            Save Lesson
+                        </button>
+
+                    </div>
+
+                </form>
+            `;
+        }
+
+
+        else if (selectedMinistry === "Calvary Kids — K–3") {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+
+                    <h3>🌈 Calvary Kids — K–3</h3>
+
+                    <p>
+                        The K–3 lesson form will appear here.
+                    </p>
+
+                </div>
+            `;
+
+        }
+
+
+        else if (selectedMinistry === "The 45") {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+
+                    <h3>4️⃣5️⃣ The 45</h3>
+
+                    <p>
+                        The 45 lesson form will appear here.
+                    </p>
+
+                </div>
+            `;
+
+        }
+
+
+        else if (selectedMinistry === "King's Kids") {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+
+                    <h3>👑 King's Kids</h3>
+
+                    <p>
+                        A King's Kids lesson form will be added here.
+                    </p>
+
+                </div>
+            `;
+
+        }
+
+
+        else if (selectedMinistry === "Calvary Youth") {
+
+            ministryForm.innerHTML = `
+                <div class="empty-message">
+
+                    <h3>⚡ Calvary Youth</h3>
+
+                    <p>
+                        A Calvary Youth lesson form will be added here.
+                    </p>
+
+                </div>
+            `;
+
+        }
+
+    });
+
+}

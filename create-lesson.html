@@ -21,13 +21,11 @@
 <body>
 
     <header class="dashboard-header">
-
         <h1>Children's Ministry Teacher Assistant</h1>
 
         <button id="backToDashboardButton">
             Back to Dashboard
         </button>
-
     </header>
 
 
@@ -36,140 +34,70 @@
         <h2>Create New Lesson</h2>
 
         <p>
-            Enter the information for your children's ministry lesson.
+            Choose a ministry and enter the lesson information.
         </p>
 
 
-        <form id="lessonForm">
+        <!-- Ministry Selection -->
 
-            <label for="lessonTitle">
-                Lesson Title
+        <section class="ministry-selection">
+
+            <label for="ministry">
+                Ministry
             </label>
 
-            <input
-                type="text"
-                id="lessonTitle"
-                placeholder="Example: Jesus Loves the Children"
-                required
-            >
-
-
-            <label for="biblePassage">
-                Bible Passage
-            </label>
-
-            <input
-                type="text"
-                id="biblePassage"
-                placeholder="Example: Luke 18:15-17"
-                required
-            >
-
-            <label for="ministry">Ministry</label>
             <select id="ministry" required>
-                <option value="">Select a ministry</option>
-                <option value="Calvary Kids">🌈 Calvary Kids</option>
-                <option value="King's Kids">👑 King's Kids</option>
-                <option value="The 45">4️⃣5️⃣ The 45</option>
-                <option value="Calvary Youth">⚡ Calvary Youth</option>
-            </select>
-
-            <label for="ageGroup">
-                Age Group
-            </label>
-
-            <select id="ageGroup" required>
 
                 <option value="">
-                    Select an age group
+                    Select a ministry
                 </option>
 
-                <option value="3-5">
-                    3–5 years
+                <option value="Calvary Kids — 2–5">
+                    🌈 Calvary Kids — 2–5
                 </option>
 
-                <option value="6-8">
-                    6–8 years
+                <option value="Calvary Kids — K–3">
+                    🌈 Calvary Kids — K–3
                 </option>
 
-                <option value="9-11">
-                    9–11 years
+                <option value="The 45">
+                    4️⃣5️⃣ The 45
                 </option>
 
-                <option value="12+">
-                    12+ years
+                <option value="King's Kids">
+                    👑 King's Kids
+                </option>
+
+                <option value="Calvary Youth">
+                    ⚡ Calvary Youth
                 </option>
 
             </select>
 
-
-            <label for="lessonDate">
-                Lesson Date
-            </label>
-
-            <input
-                type="date"
-                id="lessonDate"
-                required
-            >
+        </section>
 
 
-            <label for="description">
-                Lesson Description
-            </label>
+        <!-- Ministry-specific form will appear here -->
 
-            <textarea
-                id="description"
-                rows="5"
-                placeholder="Describe what the children will learn..."
-                required
-            ></textarea>
+        <div id="ministryForm">
 
+            <div class="empty-message">
 
-            <label for="activities">
-                Activities
-            </label>
-
-            <textarea
-                id="activities"
-                rows="5"
-                placeholder="List the activities for this lesson..."
-            ></textarea>
-
-
-            <label for="notes">
-                Teacher Notes
-            </label>
-
-            <textarea
-                id="notes"
-                rows="5"
-                placeholder="Add any additional notes..."
-            ></textarea>
-
-
-            <div class="form-buttons">
-
-                <button
-                    type="button"
-                    id="cancelLessonButton"
-                >
-                    Cancel
-                </button>
-
-                <button type="submit">
-                    Save Lesson
-                </button>
+                <p>
+                    Please select a ministry above to begin.
+                </p>
 
             </div>
 
-        </form>
+        </div>
 
     </main>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script src="supabase.js"></script>
+
     <script src="script.js"></script>
 
 </body>

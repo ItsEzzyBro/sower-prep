@@ -551,3 +551,109 @@ button:hover {
         flex-direction: column;
     }
 }
+
+/* ========================================
+   MINISTRY SELECTION
+======================================== */
+
+.ministry-selection {
+    margin-bottom: 30px;
+}
+
+.ministry-selection label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.ministry-selection select {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 16px;
+    border: 2px solid var(--border-gray);
+    border-radius: 10px;
+    outline: none;
+    background-color: white;
+}
+
+.ministry-selection select:focus {
+    border-color: var(--kids-teal);
+}
+
+#ministryForm {
+    width: 100%;
+}
+
+#ministryForm .empty-message {
+    margin-top: 20px;
+}
+
+#ministryForm h3 {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+/* ========================================
+   CURRICULUM FORM SECTIONS
+======================================== */
+
+.form-section {
+    margin-top: 30px;
+    padding: 25px;
+    background-color: #fafafa;
+    border: 2px solid var(--border-gray);
+    border-radius: 16px;
+}
+
+.form-section-title {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.form-section-description {
+    color: var(--medium-gray);
+    margin-bottom: 25px;
+}
+
+.form-section h4 {
+    font-size: 21px;
+    font-weight: 900;
+    margin-bottom: 18px;
+}
+
+.form-section label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
+
+.form-section input,
+.form-section textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 16px;
+    border: 2px solid var(--border-gray);
+    border-radius: 10px;
+    outline: none;
+    background-color: white;
+}
+
+.form-section input:focus,
+.form-section textarea:focus {
+    border-color: var(--kids-teal);
+}
+
+.form-section textarea {
+    resize: vertical;
+}
+
+.form-section:first-of-type {
+    margin-top: 20px;
+}
