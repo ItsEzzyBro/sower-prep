@@ -248,7 +248,7 @@ if (createPage) {
             review_questions: reviewQuestions,
 
             discussion_questions: discussionQuestions,
-            
+
             prayer: prayer,
 
             take_home: takeHome,
@@ -1212,6 +1212,238 @@ if (editPage) {
                 </form>
             `;
         }
+
+        else if (lesson.ministry === "The 45") {
+
+            ministryForm.innerHTML = `
+
+                <form id="lessonForm">
+
+                    <input
+                        type="hidden"
+                        id="ageGroup"
+                        value="The 45"
+                    >
+
+                    <h3 class="form-section-title">
+                        4️⃣5️⃣ The 45
+                    </h3>
+
+                    <p class="form-section-description">
+                        Update your The 45 Small Group lesson.
+                    </p>
+
+
+                    <div class="form-section">
+
+                        <h4>Lesson Information</h4>
+
+                        <label for="lessonTitle">
+                            Lesson Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lessonTitle"
+                            value="${lesson.title || ""}"
+                            required
+                        >
+
+
+                        <label for="lessonDate">
+                            Lesson Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="lessonDate"
+                            value="${lesson.lesson_date || ""}"
+                            required
+                        >
+
+
+                        <label for="week">
+                            Week
+                        </label>
+
+                        <input
+                            type="text"
+                            id="week"
+                            value="${content.week || ""}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Bible Story</h4>
+
+                        <label for="bibleStory">
+                            Bible Story
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bibleStory"
+                            value="${content.bible_story || ""}"
+                        >
+
+
+                        <label for="biblePassage">
+                            Bible References
+                        </label>
+
+                        <input
+                            type="text"
+                            id="biblePassage"
+                            value="${content.bible_references || lesson.bible_passage || ""}"
+                            required
+                        >
+
+
+                        <label for="storySummary">
+                            Bible Story Summary
+                        </label>
+
+                        <textarea
+                            id="storySummary"
+                            rows="6"
+                        >${content.story_summary || lesson.description || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Memory Verse</h4>
+
+                        <label for="memoryVerse">
+                            Memory Verse
+                        </label>
+
+                        <textarea
+                            id="memoryVerse"
+                            rows="4"
+                        >${content.memory_verse || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Discussion Questions</h4>
+
+                        <label for="discussionQuestions">
+                            Discussion Questions
+                        </label>
+
+                        <textarea
+                            id="discussionQuestions"
+                            rows="8"
+                        >${content.discussion_questions || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Review the Story</h4>
+
+                        <label for="reviewQuestions">
+                            Review Questions
+                        </label>
+
+                        <textarea
+                            id="reviewQuestions"
+                            rows="8"
+                        >${content.review_questions || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Activities</h4>
+
+                        <label for="activities">
+                            Activities
+                        </label>
+
+                        <textarea
+                            id="activities"
+                            rows="8"
+                        >${content.activities || lesson.activities || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Prayer</h4>
+
+                        <label for="prayer">
+                            Prayer
+                        </label>
+
+                        <textarea
+                            id="prayer"
+                            rows="6"
+                        >${content.prayer || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Take Home</h4>
+
+                        <label for="takeHome">
+                            Take-Home Information
+                        </label>
+
+                        <textarea
+                            id="takeHome"
+                            rows="6"
+                        >${content.take_home || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teacher Notes</h4>
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="6"
+                        >${content.teacher_notes || lesson.notes || ""}</textarea>
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="button"
+                            id="cancelLessonButton"
+                        >
+                            Cancel
+                        </button>
+
+                        <button type="submit">
+                            Update Lesson
+                        </button>
+
+                    </div>
+
+                </form>
+            `;
+        }
     }
 
 
@@ -2062,17 +2294,236 @@ if (ministrySelector && ministryForm) {
         else if (selectedMinistry === "The 45") {
 
             ministryForm.innerHTML = `
-                <div class="empty-message">
 
-                    <h3>4️⃣5️⃣ The 45</h3>
+                <form id="lessonForm">
 
-                    <p>
-                        The 45 lesson form will appear here.
+                    <input
+                        type="hidden"
+                        id="ageGroup"
+                        value="The 45"
+                    >
+
+                    <h3 class="form-section-title">
+                        4️⃣5️⃣ The 45
+                    </h3>
+
+                    <p class="form-section-description">
+                        Create a Small Group lesson for The 45.
                     </p>
 
-                </div>
-            `;
 
+                    <div class="form-section">
+
+                        <h4>Lesson Information</h4>
+
+                        <label for="lessonTitle">
+                            Lesson Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lessonTitle"
+                            placeholder="Example: Jesus Taught about the Kingdom"
+                            required
+                        >
+
+                        <label for="lessonDate">
+                            Lesson Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="lessonDate"
+                            required
+                        >
+
+                        <label for="week">
+                            Week
+                        </label>
+
+                        <input
+                            type="text"
+                            id="week"
+                            placeholder="Example: Week 2"
+                        >
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Bible Story</h4>
+
+                        <label for="bibleStory">
+                            Bible Story
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bibleStory"
+                            placeholder="Enter the Bible story"
+                        >
+
+                        <label for="biblePassage">
+                            Bible References
+                        </label>
+
+                        <input
+                            type="text"
+                            id="biblePassage"
+                            placeholder="Example: Matthew 13; Mark 4"
+                            required
+                        >
+
+                        <label for="storySummary">
+                            Bible Story Summary
+                        </label>
+
+                        <textarea
+                            id="storySummary"
+                            rows="6"
+                            placeholder="Write a summary of the Bible story..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Memory Verse</h4>
+
+                        <label for="memoryVerse">
+                            Memory Verse
+                        </label>
+
+                        <textarea
+                            id="memoryVerse"
+                            rows="4"
+                            placeholder="Enter the memory verse..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Discussion Questions</h4>
+
+                        <label for="discussionQuestions">
+                            Discussion Questions
+                        </label>
+
+                        <textarea
+                            id="discussionQuestions"
+                            rows="8"
+                            placeholder="Enter questions for the group to discuss..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Review the Story</h4>
+
+                        <label for="reviewQuestions">
+                            Review Questions
+                        </label>
+
+                        <textarea
+                            id="reviewQuestions"
+                            rows="8"
+                            placeholder="Enter questions to review the Bible story..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Activities</h4>
+
+                        <label for="activities">
+                            Activities
+                        </label>
+
+                        <textarea
+                            id="activities"
+                            rows="8"
+                            placeholder="Enter activities, games, or activity pages..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Prayer</h4>
+
+                        <label for="prayer">
+                            Prayer
+                        </label>
+
+                        <textarea
+                            id="prayer"
+                            rows="6"
+                            placeholder="Enter the prayer or prayer instructions..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Take Home</h4>
+
+                        <label for="takeHome">
+                            Take-Home Information
+                        </label>
+
+                        <textarea
+                            id="takeHome"
+                            rows="6"
+                            placeholder="Enter information children can take home..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <h4>Teacher Notes</h4>
+
+                        <label for="notes">
+                            Notes
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            rows="6"
+                            placeholder="Add any additional teacher notes..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button
+                            type="button"
+                            id="cancelLessonButton"
+                        >
+                            Cancel
+                        </button>
+
+                        <button type="submit">
+                            Save Lesson
+                        </button>
+
+                    </div>
+
+                </form>
+            `;
         }
 
 
