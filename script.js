@@ -130,6 +130,9 @@ if (lessonForm && createPage) {
         const biblePassage =
             document.getElementById("biblePassage").value;
 
+        const ministry =
+            document.getElementById("ministry").value;
+
         const ageGroup =
             document.getElementById("ageGroup").value;
 
@@ -166,13 +169,14 @@ if (lessonForm && createPage) {
         .insert([
             {
                 user_id: user.id,
-                title: title,
+                title,
                 bible_passage: biblePassage,
+                ministry,
                 age_group: ageGroup,
                 lesson_date: lessonDate,
-                description: description,
-                activities: activities,
-                notes: notes
+                description,
+                activities,
+                notes
             }
         ]);
 
@@ -204,6 +208,17 @@ if (dashboardPage) {
         if (userError || !user) {
             window.location.href = "login.html";
             return;
+        }
+
+        const welcomeMessage =
+        document.getElementById("welcomeMessage");
+
+        if (welcomeMessage) {
+            const teacherName =
+                user.user_metadata?.name || "Teacher";
+
+            welcomeMessage.textContent =
+                `Welcome, ${teacherName}! 👋`;
         }
 
         const { data: lessons, error: lessonError } =
