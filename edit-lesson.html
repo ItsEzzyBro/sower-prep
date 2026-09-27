@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Lesson - Children's Ministry Teacher Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+
+        <h1>Children's Ministry Teacher Assistant</h1>
+
+        <button id="backToDashboardButton">
+            Back to Dashboard
+        </button>
+
+    </header>
+
+
+    <main class="form-container">
+
+        <h2>Edit Lesson</h2>
+
+        <p>
+            Enter the information for your children's ministry lesson.
+        </p>
+
+
+        <form id="lessonForm">
+
+            <label for="lessonTitle">
+                Lesson Title
+            </label>
+
+            <input
+                type="text"
+                id="lessonTitle"
+                placeholder="Example: Jesus Loves the Children"
+                required
+            >
+
+
+            <label for="biblePassage">
+                Bible Passage
+            </label>
+
+            <input
+                type="text"
+                id="biblePassage"
+                placeholder="Example: Luke 18:15-17"
+                required
+            >
+
+
+            <label for="ageGroup">
+                Age Group
+            </label>
+
+            <select id="ageGroup" required>
+
+                <option value="">
+                    Select an age group
+                </option>
+
+                <option value="3-5">
+                    3–5 years
+                </option>
+
+                <option value="6-8">
+                    6–8 years
+                </option>
+
+                <option value="9-11">
+                    9–11 years
+                </option>
+
+                <option value="12+">
+                    12+ years
+                </option>
+
+            </select>
+
+
+            <label for="lessonDate">
+                Lesson Date
+            </label>
+
+            <input
+                type="date"
+                id="lessonDate"
+                required
+            >
+
+
+            <label for="description">
+                Lesson Description
+            </label>
+
+            <textarea
+                id="description"
+                rows="5"
+                placeholder="Describe what the children will learn..."
+                required
+            ></textarea>
+
+
+            <label for="activities">
+                Activities
+            </label>
+
+            <textarea
+                id="activities"
+                rows="5"
+                placeholder="List the activities for this lesson..."
+            ></textarea>
+
+
+            <label for="notes">
+                Teacher Notes
+            </label>
+
+            <textarea
+                id="notes"
+                rows="5"
+                placeholder="Add any additional notes..."
+            ></textarea>
+
+
+            <div class="form-buttons">
+
+                <button
+                    type="button"
+                    id="cancelLessonButton"
+                >
+                    Cancel
+                </button>
+
+                <button type="submit">
+                    Update Lesson
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

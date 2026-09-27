@@ -93,6 +93,7 @@ if (logoutButton) {
     });
 }
 
+
 const backToDashboardButton =
     document.getElementById("backToDashboardButton");
 
@@ -114,7 +115,10 @@ if (cancelLessonButton) {
 
 const lessonForm = document.getElementById("lessonForm");
 
-if (lessonForm) {
+const createPage =
+    window.location.pathname.includes("create-lesson.html");
+
+if (lessonForm && createPage) {
 
     lessonForm.addEventListener("submit", async function (event) {
 
@@ -262,6 +266,10 @@ if (dashboardPage) {
 
             <div class="lesson-buttons">
 
+                <button class="edit-button" data-id="${lesson.id}">
+                    Edit
+                </button>
+
                 <button class="delete-button" data-id="${lesson.id}">
                     Delete
                 </button>
@@ -284,14 +292,22 @@ if (dashboardPage) {
                 return;
             }
 
-            const { error } = await supabaseClient
+            const { data, error } = await supabaseClient
                 .from("lessons")
                 .delete()
                 .eq("id", lesson.id)
-                .eq("user_id", user.id);
+                .eq("user_id", user.id)
+                .select();
 
             if (error) {
                 alert(error.message);
+                console.error(error);
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                alert("The lesson was not deleted from the database.");
+                console.log("Delete returned no rows:", data);
                 return;
             }
 
@@ -300,8 +316,132 @@ if (dashboardPage) {
             lessonCard.remove();
 
             });
+
+            const editButton =
+            lessonCard.querySelector(".edit-button");
+
+            editButton.addEventListener("click", function () {
+
+            window.location.href =
+                `edit-lesson.html?id=${lesson.id}`;
+
+            });
         });
     }
 
     loadDashboard();
+}
+
+const editForm =
+    document.getElementById("lessonForm");
+
+if (
+    editForm &&
+    window.location.pathname.includes("edit-lesson.html")
+) {
+
+    loadLesson();
+}
+
+async function loadLesson() {
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const lessonId = params.get("id");
+
+    if (!lessonId) return;
+
+    const { data: { user } } =
+        await supabaseClient.auth.getUser();
+
+    const { data: lesson, error } =
+        await supabaseClient
+            .from("lessons")
+            .select("*")
+            .eq("id", lessonId)
+            .eq("user_id", user.id)
+            .single();
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    document.getElementById("lessonTitle").value =
+        lesson.title;
+
+    document.getElementById("biblePassage").value =
+        lesson.bible_passage;
+
+    document.getElementById("ageGroup").value =
+        lesson.age_group;
+
+    document.getElementById("lessonDate").value =
+        lesson.lesson_date;
+
+    document.getElementById("description").value =
+        lesson.description;
+
+    document.getElementById("activities").value =
+        lesson.activities;
+
+    document.getElementById("notes").value =
+        lesson.notes;
+}
+
+const editPage =
+    window.location.pathname.includes("edit-lesson.html");
+
+if (editForm && editPage) {
+
+    editForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const lessonId = params.get("id");
+
+        const { data: { user } } =
+            await supabaseClient.auth.getUser();
+
+        const { error } =
+            await supabaseClient
+                .from("lessons")
+                .update({
+                    title:
+                        document.getElementById("lessonTitle").value,
+
+                    bible_passage:
+                        document.getElementById("biblePassage").value,
+
+                    age_group:
+                        document.getElementById("ageGroup").value,
+
+                    lesson_date:
+                        document.getElementById("lessonDate").value,
+
+                    description:
+                        document.getElementById("description").value,
+
+                    activities:
+                        document.getElementById("activities").value,
+
+                    notes:
+                        document.getElementById("notes").value
+                })
+                .eq("id", lessonId)
+                .eq("user_id", user.id);
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        alert("Lesson updated!");
+
+        window.location.href = "dashboard.html";
+    });
 }
