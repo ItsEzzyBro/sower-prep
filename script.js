@@ -237,31 +237,69 @@ if (dashboardPage) {
 
             lessonCard.classList.add("lesson-card");
 
-            lessonCard.innerHTML = `
-                <h3>${lesson.title}</h3>
+        lessonCard.innerHTML = `
+            <h3>${lesson.title}</h3>
 
-                <p>
-                    <strong>Bible Passage:</strong>
-                    ${lesson.bible_passage}
-                </p>
+            <p>
+                <strong>Bible Passage:</strong>
+                ${lesson.bible_passage}
+            </p>
 
-                <p>
-                    <strong>Age Group:</strong>
-                    ${lesson.age_group}
-                </p>
+            <p>
+                <strong>Age Group:</strong>
+                ${lesson.age_group}
+            </p>
 
-                <p>
-                    <strong>Date:</strong>
-                    ${lesson.lesson_date}
-                </p>
+            <p>
+                <strong>Date:</strong>
+                ${lesson.lesson_date}
+            </p>
 
-                <p>
-                    <strong>Description:</strong>
-                    ${lesson.description}
-                </p>
-            `;
+            <p>
+                <strong>Description:</strong>
+                ${lesson.description}
+            </p>
+
+            <div class="lesson-buttons">
+
+                <button class="delete-button" data-id="${lesson.id}">
+                    Delete
+                </button>
+
+            </div>
+        `;
 
             dashboardPage.appendChild(lessonCard);
+
+            const deleteButton =
+            lessonCard.querySelector(".delete-button");
+
+            deleteButton.addEventListener("click", async function () {
+
+            const confirmed = confirm(
+                "Are you sure you want to delete this lesson?"
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            const { error } = await supabaseClient
+                .from("lessons")
+                .delete()
+                .eq("id", lesson.id)
+                .eq("user_id", user.id);
+
+            if (error) {
+                alert(error.message);
+                return;
+            }
+
+            alert("Lesson deleted successfully!");
+
+            lessonCard.remove();
+
+            });
         });
     }
 

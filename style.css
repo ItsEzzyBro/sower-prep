@@ -243,3 +243,30 @@ button {
 .form-buttons button {
     flex: 1;
 }
+
+.lesson-card {
+    background-color: white;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.lesson-card h3 {
+    margin-bottom: 15px;
+}
+
+.lesson-card p {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.lesson-buttons {
+    margin-top: 20px;
+}
+
+.delete-button {
+    background-color: #eeeeee;
+    color: #333333;
+    padding: 10px 18px;
+}
