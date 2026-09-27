@@ -157,19 +157,20 @@ if (lessonForm) {
 
 
         const { data, error } =
-            await supabaseClient
-                .from("lessons")
-                .insert([
-                    {
-                        title: title,
-                        bible_passage: biblePassage,
-                        age_group: ageGroup,
-                        lesson_date: lessonDate,
-                        description: description,
-                        activities: activities,
-                        notes: notes
-                    }
-                ]);
+        await supabaseClient
+        .from("lessons")
+        .insert([
+            {
+                user_id: user.id,
+                title: title,
+                bible_passage: biblePassage,
+                age_group: ageGroup,
+                lesson_date: lessonDate,
+                description: description,
+                activities: activities,
+                notes: notes
+            }
+        ]);
 
 
         if (error) {
@@ -202,10 +203,11 @@ if (dashboardPage) {
         }
 
         const { data: lessons, error: lessonError } =
-            await supabaseClient
-                .from("lessons")
-                .select("*")
-                .order("lesson_date", { ascending: true });
+        await supabaseClient
+        .from("lessons")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("lesson_date", { ascending: true });
 
         if (lessonError) {
             dashboardPage.innerHTML =
