@@ -98,3 +98,19 @@ childrens-ministry-teacher-assistant/
 ## Deployed Application
 
 [Open Sower Prep](https://sower-prep.netlify.app)
+
+## Setup Instructions
+
+To run Sower Prep locally:
+
+1. Clone the repository to your computer.
+
+2. Open the project folder in Visual Studio Code.
+
+3. Configure the Supabase connection in `supabase.js`.
+
+4. Run the application using the Live Server extension in Visual Studio Code.
+
+5. Open the application in your browser.
+
+6. Register a new account or log in to begin creating and managing lessons.
