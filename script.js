@@ -259,6 +259,10 @@ if (dashboardPage) {
         lessonCard.innerHTML = `
             <h3>${lesson.title}</h3>
 
+            <span class="ministry-badge">
+                ${lesson.ministry}
+            </span>
+
             <p>
                 <strong>Bible Passage:</strong>
                 ${lesson.bible_passage}
