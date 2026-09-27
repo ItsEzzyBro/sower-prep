@@ -1,8 +1,8 @@
-# Children's Ministry Teacher Assistant
+# Sower Prep
 
 ## Description
 
-Children's Ministry Teacher Assistant is a web application designed to help children's ministry teachers create, organize, view, and manage Bible lesson plans.
+Sower Prep is a web application designed to help children's ministry teachers create, organize, view, and manage Bible lesson plans.
 
 Teachers can create lessons for different ministry age groups, save their lesson information in a database, view complete lessons, edit lessons, and delete lessons.
 
