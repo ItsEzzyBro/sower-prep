@@ -94,3 +94,7 @@ childrens-ministry-teacher-assistant/
 ## GitHub Repository
 
 [View the GitHub Repository](https://github.com/ItsEzzyBro/sower-prep)
+
+## Deployed Application
+
+[Open Sower Prep](https://sower-prep.netlify.app)
