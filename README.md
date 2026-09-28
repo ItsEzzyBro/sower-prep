@@ -113,4 +113,4 @@ To run Sower Prep locally:
 
 ## Demo Video
 
-Demo video coming soon.
+[Demo Video](https://youtu.be/rDLtCp2Cydw)
